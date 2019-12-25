@@ -22,10 +22,23 @@ namespace Invoicer
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(options => 
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +48,8 @@ namespace Invoicer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 
