@@ -24,11 +24,11 @@ namespace Invoicer.Controllers
                                 on l.InvoiceId equals i.InvoiceId
                                join c in context.Clients
                                on i.ClientId equals c.ClientId
-                               where i.InvoiceNumber == 12345
+                               //where i.InvoiceNumber == 12345
                                select new
                                {
                                    InvoiceNumber = i.InvoiceNumber,
-                                   ServiceDescription = c.Name,
+                                   Name = c.Name,
                                    Hours = l.Hours,
                                    Rate = l.Rate,
                                    InvoiceAmount = i.InvoiceAmount,
